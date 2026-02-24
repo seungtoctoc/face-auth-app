@@ -1,17 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  webpack: (config, { isServer }) => {
-    if (isServer) {
-      // face-api.js가 서버 사이드에서 canvas를 참조하지 않도록 제외
-      config.externals = [
-        ...(Array.isArray(config.externals) ? config.externals : []),
-        "canvas",
-        "encoding",
-      ];
-    }
-    return config;
-  },
+  // Next.js 15/16: server-side external packages (replaces webpack externals)
+  serverExternalPackages: ["canvas", "encoding"],
+  // Silence Turbopack warning (default in Next.js 16)
+  turbopack: {},
 };
 
 export default nextConfig;
